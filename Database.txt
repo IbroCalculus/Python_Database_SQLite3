@@ -1,0 +1,173 @@
+*SQL (Not Case sensitive)
+NB: CHAR VS VARCHAR -> CHAR - allows only alphabets.	 VARCHAR - allows alphanumeric
+
+*CREATE DATABASE:
+create database mydb;
+
+*SHOW AVAILABLE DATABASES:
+show databases
+
+*USE A PARTICULAR DATABASE
+use mydb;
+
+
+*CREATE TABLE
+create table employee(eid int, ename char(20), salary double(7.2));	//E.g 7.2 -> 15000.00. Default int size=11 unless specified.
+
+*VIEW STRUCTURE OF TABLE
+desc employee
+
+*ALTER TABLE
+alter table employee modify eid int primary key	//Made eid into a primary key(Unique value)
+
+*INSERT INTO DATABASE
+It is possible to write the INSERT INTO statement in two ways.
+The first way specifies both the column names and the values to be inserted:
+
+-INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);
+
+If you are adding values for all the columns of the table, you do not need to specify the column names in the SQL query. However, make sure the order of the values is in the same order as the columns in the table. The INSERT INTO syntax would be as follows:
+
+-insert into employee values(101, 'Ibrahim', 70000.00)
+
+ALSO; IN JAVA: con.PreparedStatement("insert into student values(?,?,?)");
+	ps.setInt(1, 102);
+	ps.setString(2, "Musa");
+	ps.setInt(3, 40000.00);
+
+*VIEW/GET ALL TABLE CONTENTS
+The SELECT statement is used to select data from a database.
+The data returned is stored in a result table, called the result-set.
+
+select * from employee
+
+*SELECT COLUMN
+select ename from employee
+
+*SELECT DISTINCT
+The SELECT DISTINCT statement is used to return only distinct (different) values.
+Inside a table, a column often contains many duplicate values; and sometimes you only want to list the different (distinct) values.
+
+select distinct Country FROM Customers;
+
+select count(distinct Country) from Customers; // Returns the number of distinct Country
+
+
+*VIEW/GET PARTICULAR TABLE COLUMN CONTENT
+1.	select * from employee where ename='Ibrahim'
+2.	select * from employee where ename like '%Ibrahim%'	\\Pattern matching. Search for similarity
+3.	select * from employee where ename=? and salary=?
+4. 	SELECT * FROM Customers WHERE Country='Germany' AND (City='Berlin' OR City='München');	\\OR, AND, NOT
+5.	SELECT * FROM Customers WHERE NOT Country='Germany' AND NOT Country='USA'
+
+*MODIFY/ADD TABLE COLUMN
+alter table employee add address varchar(30)	//varchar -> alphanumeric value
+
+*UPDATE TABLE RECORD
+update employee set address='No. 123, xyz crescent' where eid=101
+UPDATE Customers SET ContactName = 'Alfred Schmidt', City= 'Frankfurt' WHERE CustomerID = 1;
+
+*DELETE ALL RECORDS FROM A TABLE
+delete from employee
+
+*DELETE A PARTICULAR RECORD
+delete from employee where eid=101;
+
+
+*DELETE TABLE
+drop employee
+
+*DELETE DATABASE
+drop database mydb;
+
+
+*MAXIMUM VALUE
+select max(salary) from employee
+
+*MINIMUM VALUE
+select min(salary) from employee
+
+*AVERAGE VALUE
+select avg(salary) from employee
+
+*SUM OF VALUES
+select sum(salary) from employee
+
+NB: Separate multiply values by comma E.g select max(salary), sum(salary), avg(salary) from employee
+
+*NUMBER OF RECORDS(ROWS) IN TABLE
+select count(*) from employee
+
+*The SQL ORDER BY Keyword
+The ORDER BY keyword is used to sort the result-set in ascending or descending order.
+The ORDER BY keyword sorts the records in ascending order by default. To sort the records in descending order, use the DESC keyword.
+
+-SELECT * FROM Customers ORDER BY Country DESC; //ASC
+
+The following SQL statement selects all customers from the "Customers" table, sorted by the "Country" and the "CustomerName" column. This means that it orders by Country, but if some rows have the same Country, it orders them by CustomerName:
+
+-SELECT * FROM Customers ORDER BY Country, CustomerName;
+
+The following SQL statement selects all customers from the "Customers" table, sorted ascending by the "Country" and descending by the "CustomerName" column:
+
+-SELECT * FROM Customers ORDER BY Country ASC, CustomerName DESC;
+
+*SQL NULL Values
+-How to Test for NULL Values?
+-SELECT CustomerName, ContactName, Address FROM Customers WHERE Address IS NOT NULL;
+
+*The SQL SELECT TOP Clause
+Note: Not all database systems support the SELECT TOP clause. MySQL supports the LIMIT clause to select a limited number of records, while Oracle uses ROWNUM.
+
+-MySQL Syntax: SELECT * FROM Customers LIMIT 3;
+-SQL Server / MS Access Syntax: SELECT TOP 3 * FROM Customers;
+-Oracle Syntax: SELECT * FROM Customers WHERE ROWNUM <= 3;
+
+*SQL TOP PERCENT
+SELECT TOP 50 PERCENT * FROM Customers; //FOR SQL Server/MS Access. No similar for MySQL. Use your logic
+
+*The SQL LIKE Operator
+The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
+There are two wildcards often used in conjunction with the LIKE operator:
+% - The percent sign represents zero, one, or multiple characters
+_ - The underscore represents a single character
+Note: MS Access uses an asterisk (*) instead of the percent sign (%), and a question mark (?) instead of the underscore (_).
+
+LIKE Syntax: SELECT column1, column2, ... FROM table_name WHERE columnN LIKE pattern;
+SELECT * FROM Customers WHERE CustomerName NOT LIKE 'a%';
+SELECT * FROM Customers WHERE CustomerName LIKE 'a%';
+
+Here are some examples showing different LIKE operators with '%' and '_' wildcards:
+
+LIKE Operator			Description
+WHERE CustomerName LIKE 'a%'	Finds any values that start with "a"
+WHERE CustomerName LIKE '%a'	Finds any values that end with "a"
+WHERE CustomerName LIKE '%or%'	Finds any values that have "or" in any position
+WHERE CustomerName LIKE '_r%'	Finds any values that have "r" in the second position
+WHERE CustomerName LIKE 'a_%_%'	Finds any values that start with "a" and are at least 3 characters in length
+WHERE ContactName LIKE 'a%o'	Finds any values that start with "a" and ends with "o"
+
+
+
+SOME OF THE MOST IMPORTANT SQL COMMANDS
+1. SELECT 		- Extracts data from the database
+2. UPDATE 		- Updates data into the database
+3. DELETE 		- Deletes data from a database
+4. INSERT INTO 		- Inserts new data into a database
+5. CREATE DATABASE 	- Creates a new database
+6. ALTER DATABASE 	- Modifies a database
+7. CREATE TABLE		- Creates a new table
+8. ALTER TABLE		- Modifies a table
+9. DROP TABLE 		- Deletes a table
+10. CREATES INDEX	- Creates an index(Search key)
+11. DROP INDEX		- Deletes an index
+
+
+
+
+
+
+
+
+
+
